@@ -1,29 +1,30 @@
 {%extends "registration/base.html"%} 
 {% load bootstrap5 %}
 {% load crispy_forms_tags%}
+{% load static %}
 {% block content %}
-<div class="container">
-  <div class="row">
-    <!-- Empty div -->
-    <div class="col-md-3"></div>
-    <div class="col-md-6 content-section">
-    <form action="" method="post">
-      {%csrf_token%}
-      <fieldset class="form-group">
-        <legend class="border-bottom mb-2">Join Today</legend>
 
-        {{form|crispy}}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-title mt-4">
+                  <img src="{% static 'photos/logo1.png' %}" alt="" width="40%" class="logo">
+                </div>
+                <div class="card-body mb-2 mr-3 ml-3">
+                    <h6 class="text-center text-muted intro">Sign up to see photos and videos from your friends.</h6>
+                    <form action="" method="post" novalidate>
+                        {% csrf_token%}
+                        {{ form|crispy}}
+                        <button type="submit" class="btn btn-primary btn-sm login"> Sign up</button>
+                    </form>
+                </div>
+                <small class="text-muted text-center mb-2"> Have an account? <a href="{%url 'login'%}">Log in</a></small>  
+            </div>
+        </div>
 
-      </fieldset>
-      <div class="form-group">
-        <button class="btn btn-outline-info" type="submit">Sign Up</button>
-      </div>
-    </form>
-    <small class="text-muted"> Have an account? <a href="{%url 'login'%}">Log in here</a></small>
+        <div class="col-md-4"></div>
     </div>
-    <!-- empty div -->
-    <div class="col-md-3"></div>
-  </div>
 </div>
-
 {% endblock %}

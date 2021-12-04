@@ -1,22 +1,49 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+<nav class="navbar navbar-dark bg-dark mb-2">
+  <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">The Moringa Tribune</a>
+
+      <div class="col-sm-4 col-md-4 form">
+
+          <form class="navbar-form" role="search" action="">
+
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search Article" name="article">
+                  <div class="input-group-btn">
+                      <button class="btn btn-primary " type="submit">SEARCH</button>
+                  </div>
+              </div>
+
+          </form>
+      </div>
+      <div class="col-sm-6 col-md-6">
+        {% if user.is_authenticated %}
+        <ul>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account
+                      <span class="caret"></span>
+                  </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a href="{%url 'home'%}">Home</a>
+              </li>
+              <li>
+                <a href="">Create Article</a>
+              </li>
+              <li>
+                <a href="/accounts/password/change">Change Password</a>
+              </li>
+              <li>
+                <a href="/logout">Logout</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        {% else %}
+        <li class="">
+          <a class='btn btn-default' href="/login">Login</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+
+        {% endif %}
+      </div>
+  </div>
+</nav>
