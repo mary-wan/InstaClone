@@ -22,11 +22,11 @@ body{
       animation-iteration-count: 100000;
   }
   @keyframes slide {
-      0%   {background-image: url(/static/photos/pic3.jpg);}
-      25%  {background-image: url(/static/photos/pic4.jpg);}
-      50%  {background-image: url(/static/photos/pic5.jpg);}
-      75%  {background-image: url(/static/photos/pic6.jpg);}
-      100% {background-image: url(/static/photos/pic5.jpg);}
+      0%   {background-image: url(/static/photos/slide1.jpg);}
+      25%  {background-image: url(/static/photos/slide2.jpg);}
+      50%  {background-image: url(/static/photos/slide3.jpg);}
+      75%  {background-image: url(/static/photos/slide4.jpg);}
+      100% {background-image: url(/static/photos/slide3.jpg);}
   }
   div.slider{
     position: absolute;
