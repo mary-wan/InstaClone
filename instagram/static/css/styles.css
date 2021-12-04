@@ -40,6 +40,34 @@ body{
 .intro{
     font-weight: bolder;
 }
+.navbar{
+    border-bottom: 1px solid;
+    border-color: rgb(230, 225, 225);
+}
+.navbar-icons{
+    margin: 0% !important;
+    padding: 0% !important;
+}
+#add{
+    border: 2px solid;
+    border-color: black;
+    border-radius: 4px;
+
+}
+.user{
+    height: 40px;
+    width: 40px;
+}
+.user:hover{
+    border:1px solid;
+    border-color: black;
+    border-radius: 100%;
+}
+.nav-link:hover{
+    /* color: blue !important; */
+    background-color: rgb(250, 245, 245) !important;
+}
+
 
 
   
@@ -47,6 +75,9 @@ body{
 
     .slide-holder{
         display: none;
+    }
+    .search{
+        width: 60%;
     }
 
 }

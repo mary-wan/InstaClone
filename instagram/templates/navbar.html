@@ -1,49 +1,69 @@
-<nav class="navbar navbar-dark bg-dark mb-2">
-  <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'home' %}">The Moringa Tribune</a>
-
-      <div class="col-sm-4 col-md-4 form">
-
-          <form class="navbar-form" role="search" action="">
-
-              <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search Article" name="article">
-                  <div class="input-group-btn">
-                      <button class="btn btn-primary " type="submit">SEARCH</button>
-                  </div>
-              </div>
-
-          </form>
-      </div>
-      <div class="col-sm-6 col-md-6">
+{%load static %}
+<div class="navbar sticky-top bg-white navbar-light mb-2 navbar-expand-lg">
+  <nav class="container">
+    <span class="navbar-brand m-0 pt-0 pb-0 h1">
+        <a class="navbar-brand" href="/"><i class='fab fa-instagram fa-pulse fa-spin'></i><img src="{% static 'photos/logo1.png' %}"  alt= "" class="logo"></a>
+    </span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <form class="mb-0 h1 ml-auto mr-auto" id="searchform" action=" " >
+           <input name="search_user" autocomplete="off" id="searching" class="form-control input-sm search" 
+            placeholder="&#xF002; Search"  style="font-family:Arial, FontAwesome">
+          <i class="spinner "></i>
+      </form>
+      <span class="pull-right">
+          <div class="instaicon disc"></div>
+          <div class="instaicon like"></div>
+          <a href=" " class="instaicon pers"></a>
+      </span>
+      <!-- <span class="navbar-text">
+        Navbar text with an inline element
+      </span> -->
+      <ul class="nav navbar-nav navbar-right ml-auto mr-5">
         {% if user.is_authenticated %}
-        <ul>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false">Account
-                      <span class="caret"></span>
-                  </a>
-            <ul class="dropdown-menu" role="menu">
-              <li>
-                <a href="{%url 'home'%}">Home</a>
-              </li>
-              <li>
-                <a href="">Create Article</a>
-              </li>
-              <li>
-                <a href="/accounts/password/change">Change Password</a>
-              </li>
-              <li>
-                <a href="/logout">Logout</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        {% else %}
-        <li class="">
-          <a class='btn btn-default' href="/login">Login</a>
+        <li class="nav-item active">
+          <!-- <a href="{%url 'home'%}">Home</a> -->
+          <a class="nav-link" href="{%url 'home'%}">
+            <span style="font-size: 1.6em;  color:black " class="navbar-icons" ><i class="fa fa-home navbar-icons"></i></span>
+            </a>
         </li>
-
-        {% endif %}
-      </div>
-  </div>
-</nav>
+        <li class="nav-item active">
+          <a class="nav-link" href="{%url 'home'%}">
+            <span style="font-size: 1.6em;  color:black " class="navbar-icons" ><i class="far fa-heart navbar-icons"></i></span>
+            </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{%url 'home'%}">
+            <span style="font-size: 1.3em;  color:black " class="navbar-icons" ><i class="fas fa-plus navbar-icons" id="add"></i></span>
+            </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="{% static 'photos/slide1.jpg' %}"  alt= "" class="rounded-circle user">
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a href="{%url 'home'%}" class="nav-link text-dark dropdown-item"><i class="fas fa-user"></i> Profile</a>
+            <a href="/accounts/password/change" class="nav-link text-dark dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+            <a href="/logout" class="nav-link text-dark dropdown-item">Logout</a>
+            
+          </div>
+        </li>
+        
+        <!-- <li class="nav-item active">
+          <a class="nav-link" href="{%url 'home'%}">
+            <span style="font-size: 1.1em;  color:black " class="navbar-icons" ></i><img src="{% static 'photos/slide1.jpg' %}"  alt= "" class="rounded-circle user"></span>
+            </a>
+        </li> -->
+        <!-- <li>
+          <a href="/accounts/password/change">Change Password</a>
+        </li> -->
+        <!-- <li class="nav-item active"><a class="nav-link"  href="/logout">logout</a></li> -->
+        {% else %}
+        <li class="nav-item active "><a class="nav-link" href="{%url 'login'%}">Log in</a></li>
+        <li class="nav-item active "><a class="nav-link" href="{%url 'register'%}">Sign up</a></li>
+        {%endif%}
+    </ul>
+    </div>
+  </nav>
+</div>

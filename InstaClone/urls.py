@@ -22,8 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('instagram.urls')),
     path('tinymce /', include('tinymce.urls')),
-    path('register/',insta_views.register, name='register'),
-    path('login/',auth_views.LoginView.as_view(), name='login'),
+    path('accounts/register/',insta_views.register, name='register'),
+    path('accounts/login/',auth_views.LoginView.as_view(), name='login'),
     path('logout/',auth_views.LogoutView.as_view(), name='logout'),
     
 ]
