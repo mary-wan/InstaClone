@@ -83,13 +83,11 @@ body{
     border-color:rgb(223, 220, 220) !important ;
     /* border-radius: 2px; */
 }
-/* .comment-button{
-    margin-left: 30%;
-} */
+
 .upload-photo{
     background-color: #fafafa;
     border: solid 2px #333;
-    padding: 1em;
+
 }
 .view{
     font-size: 13px !important;

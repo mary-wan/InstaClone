@@ -5,7 +5,7 @@
 {% block content %} 
 {{ block.super}}
 
-<div class="container mt-5">
+<div class="container mt-3">
     <div class="col-md-7">
         <div class="row">
             <div class="modal fade" id="post-upload" tabindex="-1" role="dialog"
@@ -36,8 +36,8 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-6">
-            <button class="btn btn-sm btn-block mb-4 mx-auto upload-photo" type="button"  data-toggle="modal" data-target="#post-upload" >
-                <i class="fas fa-upload"></i> Post a Photo
+            <button class="btn btn-sm mb-4 ml-2  upload-photo" type="button"  data-toggle="modal" data-target="#post-upload" >
+                <i class="fas fa-upload"></i> Upload a Photo
             </button>
         {%for post in posts%}
         <div class="card mb-4">

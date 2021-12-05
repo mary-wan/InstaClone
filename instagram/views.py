@@ -43,59 +43,12 @@ def index(request):
   
     return render(request, 'all-instagram/home.html',{'posts': posts,'post_form': post_form,'users': users,'comments':comments} )
 
-
-
-# @login_required(login_url='/accounts/login/')
-# def comment(request,image_id):
-
-#     image = get_object_or_404(Image, pk=image_id)
-#     current_user =request.user
-#     comments =Comments.get_comments_by_images(image_id).all()
-
-#     if request.method == 'POST':
-#         image = get_object_or_404(Image, pk = image_id)
-#         form = CommentForm(request.POST)
-#         if form.is_valid():
-#             comment = form.save(commit=False)
-#             comment.user = current_user
-#             comment.image = image
-#             comment.save()
-
-#     return render(request,'all-instagram/post.html',{'image':image,'comments':comments,'form':form})
-
-
-
-
-# def post(request,image_id):
-#     post = Image.objects.get(id = image_id)
-#     comments = Comments.objects.filter(image__id=image_id)
-#     current_user = request.user
-
-
-#     if request.method == "POST":
-#         comment_form = CommentForm(request.POST)
-
-#         if comment_form.is_valid():
-#             comment = comment_form.save(commit=False)
-#             comment.user = current_user
-#             comment.post = post
-#             comment.save()
-#             comment_form = CommentForm()
-#             return redirect("post", post.image_id)
-
-#     else:
-#         comment_form = CommentForm()
-
-#     return render(request, "all-instagram/post.html")
-
+@login_required(login_url='login')
 def like(request, id):
     post = Image.objects.get(id = id)
     post.likes += 1
     post.save()
     return HttpResponseRedirect(reverse("home"))
-
-# def profile(request):
-#     return render(request,"all-instagram/profile.html")
 
 @login_required(login_url='login')
 def profile(request, username):
@@ -133,9 +86,7 @@ def comment(request, id):
 
     return render(request, 'all-instagram/post.html', {'post': image,'form': form,})
 
-
-
-
+@login_required(login_url='login')
 def unfollow(request, to_unfollow):
     if request.method == 'GET':
         user_profile2 = Profile.objects.get(pk=to_unfollow)
@@ -143,7 +94,7 @@ def unfollow(request, to_unfollow):
         unfollow_d.delete()
         return redirect('user_profile', user_profile2.user.username)
 
-
+@login_required(login_url='login')
 def follow(request, to_follow):
     if request.method == 'GET':
         user_profile3 = Profile.objects.get(pk=to_follow)
@@ -154,23 +105,18 @@ def follow(request, to_follow):
     
 @login_required(login_url='login')
 def user_profile(request, username):
-    user_prof = get_object_or_404(User, username=username)
-    if request.user == user_prof:
+    user_poster = get_object_or_404(User, username=username)
+    if request.user == user_poster:
         return redirect('profile', username=request.user.username)
-    # user_posts = user_prof.profile.posts.all()
+    user_posts = user_poster.images.all()
     
-    followers = Follow.objects.filter(followed=user_prof.profile)
+    followers = Follow.objects.filter(followed=user_poster.profile)
     follow_status = None
     for follower in followers:
         if request.user.profile == follower.follower:
             follow_status = True
         else:
             follow_status = False
-    params = {
-        'user_prof': user_prof,
-        # 'user_posts': user_posts,
-        'followers': followers,
-        'follow_status': follow_status
-    }
+
     print(followers)
-    return render(request, 'all-instagram/poster.html', params)
+    return render(request, 'all-instagram/poster.html', {'user_poster': user_poster,'followers': followers, 'follow_status': follow_status,'user_posts':user_posts})
