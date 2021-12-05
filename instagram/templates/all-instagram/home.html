@@ -41,7 +41,7 @@
             </button>
         {%for post in posts%}
         <div class="card mb-4">
-            <a class="card-header font-weight-bold text-dark" href="#">  <img src="{% static 'photos/slide1.jpg' %}"  alt= "" class="rounded-circle user">{{post.user.username}} </a>  
+            <a class="card-header font-weight-bold text-dark" href="#">  <img src="{{post.user.profile.profile_pic.url}}"  alt= "" class="rounded-circle user">  {{post.user.username}} </a>  
             <img class="card-img-top" src="{{post.image.url}}" alt=" " height="350">
             <div class="card-body">
             <span>
@@ -50,7 +50,7 @@
                 </a>
             </span>
             <span>
-                <a class="ml-3" href="{% url 'post' post.id%}"><span
+                <a class="ml-3" href="{% url 'comment' post.id %}"><span
                         style="font-size: 1.3em;"><i class="far fa-comment text-dark"></i></span>
                 </a>
             </span><br><br>
@@ -66,7 +66,7 @@
             <small class="ml-1 text-muted mt-1">{{post.upload_date|timesince|upper}} AGO </small>
             </div>
             <!-- <div class="post-footer  text-muted">
-                <form class="mb-0 ml-auto mr-auto" id="commentForm" action="{% url 'comment' post.id%} " method="post">
+                <form class="mb-0 ml-auto mr-auto" id="commentForm" action=" " method="post">
                     <input name="comment" autocomplete="off" id="comment" class="input-lg" 
                      placeholder="&#xF002; Add a comment ..."  style="font-family:Arial, FontAwesome" required>
                      {% csrf_token %}

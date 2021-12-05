@@ -4,37 +4,60 @@
 {% load crispy_forms_tags %}
 {% block content %} 
 {{ block.super}}
-<div class="container" style="margin-top: 100px;">
+<div class="container mt-4">
     <div class="row">
-        <div class="col-lg-8">
-            <div class="card">
-                <img src="{{post.image.url}}" alt="" class="img-fluid">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+            <!-- <a class="card-header font-weight-bold text-dark" href="#">  <img src="{% static 'photos/slide1.jpg' %}"  alt= "" class="rounded-circle user">{{post.user.username}} </a>  
+            <img class="card-img-top" src="{{image.image.url}}" alt=" " height="450">  -->
+            <div class="card mb-4">
+                <a class="card-header font-weight-bold text-dark" href="#">  <img src="{{post.user.profile.profile_pic.url}}" class="rounded-circle border ml-3 mt-2  mr-3"
+                    alt="" width="35" height="35">{{post.user.username}} </a>  
+                
+                <img class="card-img-top mt-1" src="{{post.image.url}}" alt=" " height="350">
+                <div class="card-body">
+                <span>
+                    <a class="ml-1" href="{%url 'like' post.id%}"><span
+                            style="font-size: 1.3em;"><i class="far fa-heart text-dark"></i></span>
+                    </a>
+                </span>
+                <span>
+                    <a class="ml-3" href=" "><span
+                            style="font-size: 1.3em;"><i class="far fa-comment text-dark"></i></span>
+                    </a>
+                </span><br><br>
+                <span class="ml-1 view" style="font-weight: bolder;" >{{post.likes}} likes</span><br><br>
+                <span class="ml-1"><span class="font-weight-bold">{{post.user}}</span> {{post.caption}}</span><br>
+                <p class="ml-1 text-muted view">View all {{ comment|length }} comments</p>
+    
+                <small class="ml-1 text-muted mt-1">{{post.upload_date|timesince|upper}} AGO </small>
+                </div>
+
             </div>
 
         </div>
-        <div class="col-lg-4">
-            <div style="display: flex;">
-                <img src="{% static 'photos/slide1.jpg' %}"  alt= "" class="rounded-circle user">
-                <!-- <a href="{%url 'profile' post.profile.id%}" style="color: #333;"> -->
-                    <!-- <h5 class="card-title" style="padding-top: 10px; margin-left:10px">{{post.profile.username}}
-                    </h5> -->
-                </a>
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+            <div class="">
+            <hr>
+            {% for comment in post.comments.all %}
+                <div class="comment">
+                    <div class="ml-2">
+                        <strong>{{ comment.user.username }}</strong> <span class="view">{{ comment.comment }}</span><br>
+                        <small class="text-muted">{{comment.comment_date|timesince}}</small>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="ml-3">No comments here yet</p>
+                {% endfor %}
             </div>
-            <hr> {%for comment in comments%}
-            <p><span style="font-weight: bolder;">{{comment.user.username}}</span> {{comment.comment}}</p>
-            {%endfor%}
-            <a href="{%url 'like_post' post.id%}">
-                <i class="far fa-heart fa-lg" style="font-size: 30px; margin-right:10px; color:#fa6161"></i>
-            </a>
-            <i class="far fa-comment fa-lg" style="font-size: 30px;"></i>
-            <p class="ml-2" style="font-weight: bolder; margin-top:10px">{{post.likes}} likes</p>
-            <p class="ml-2 text-muted">{{post.date|timesince|upper}}</p>
-            <form class="" action="{%url 'post' post.id%}" style="border:none; padding:0; display:flex" method="POST">
+            <form class="" action="" method="post" id="commform" enctype="multipart/form-data">
                 {%csrf_token%}
-                 {{comment_form|crispy}}
-                <button style="border:none; border-radius:0; font-weight:bold; padding:10px;">Post</button>
+                 {{form|crispy}}
+                <button class="btn btn-info btn-sm">Post</button>
             </form>
         </div>
+        <div class="col-md-1"></div>
     </div>
 </div>
 
