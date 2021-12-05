@@ -3,16 +3,54 @@
 {% block content %} 
 {{ block.super}}
 
-<div class="container">
-    <h1 class="text-center bg-info">Today is the day</h1>
+<div class="container mt-5">
+    <!-- <h1 class="text-center bg-info">Today is the day</h1>
 
     <div class="row gallery p-3" id="gallery">
-        {%for photo in posts%}
-        <div class="col-sm-8 col-lg-3 mb-3 imgdisplay"  data-toggle="modal" data-target="#{{photo.id}}">
-            <img src="{{photo.image.url}}" alt=" " class="card-img photo" height="200">
-            <p>{{photo.caption}}</p>
-            <small id="photoDesc">{{photo.editor}}</small>
+        {%for post in posts%}
+        <div class="col-sm-8 col-lg-3 mb-3 imgdisplay"  data-toggle="modal" data-target="#{{post.id}}">
+            <img src="{{post.image.url}}" alt=" " class="card-img post" height="200">
+            <p>{{post.caption}}</p>
+            <small id="postDesc">{{post.editor}}</small>
         </div>
         {%endfor%}
+    </div> -->
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+        {%for post in posts%}
+        <div class="card mb-4">
+            <div class="card-header">Featured </div>  
+            <img class="card-img-top" src="{{post.image.url}}" alt=" " height="300">
+            <div class="card-body">
+            <!-- <h5 class="card-title">Card title</h5> -->
+            <span>
+                <a class="ml-3" href=""><span
+                        style="font-size: 1.3em;"><i class="far fa-heart text-dark"></i></span>
+                </a>
+            </span>
+            <span>
+                <a class="ml-3" href=""><span
+                        style="font-size: 1.3em;"><i class="far fa-comment text-dark"></i></span>
+                </a>
+            </span>
+
+            <!-- <span style="font-size: 1.6em;  color:black " class="navbar-icons" ><i class="far fa-heart navbar-icons"></i></span> -->
+            <p class="ml-2 mt-1"><span class="font-weight-bold">{{post.editor}}</span> {{post.caption}}</p>
+            <p class="ml-2 text-muted mt-2">View all comments</p>
+            <p class="ml-2 text-muted mt-1">{{post.upload_date|timesince}}</p>
+            </div>
+            <div class="post-footer  text-muted">
+                <form class="mb-0 ml-auto mr-auto" id="commentForm" action=" " enctype="multipart/form-data">
+                    <input name="comment" autocomplete="off" id="comment" class="input-lg" 
+                     placeholder="&#xF002; Add a comment ..."  style="font-family:Arial, FontAwesome">
+                     <button class="btn btn-sm btn-info comment-button" type="submit">Post</button>
+               </form>
+            </div>
+        </div>
+        {%endfor%}
+        </div>
+        <div class="col-md-5"></div>
+    </div>
 </div>
 {%endblock%}

@@ -6,7 +6,7 @@ from .forms import NewsLetterForm, UserRegisterForm
 # from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-import six
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -26,6 +26,8 @@ def register(request):
 
 def index(request):
     posts= Post.objects.all()
+    if 'comment' in request.GET and request.GET["comment"]:
+        search_category=request.GET.get("category")
     
     return render(request, 'all-instagram/home.html',{'posts': posts} )
 

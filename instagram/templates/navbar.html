@@ -1,26 +1,18 @@
 {%load static %}
 <div class="navbar sticky-top bg-white navbar-light mb-2 navbar-expand-lg">
   <nav class="container">
-    <span class="navbar-brand m-0 pt-0 pb-0 h1">
+    <span class="navbar-brand m-0 pt-0 pb-0">
         <a class="navbar-brand" href="/"><i class='fab fa-instagram fa-pulse fa-spin'></i><img src="{% static 'photos/logo1.png' %}"  alt= "" class="logo"></a>
     </span>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <form class="mb-0 h1 ml-auto mr-auto" id="searchform" action=" " >
+      <form class="mb-0 ml-auto mr-auto" id="searchform" action=" " enctype="multipart/form-data">
            <input name="search_user" autocomplete="off" id="searching" class="form-control input-sm search" 
             placeholder="&#xF002; Search"  style="font-family:Arial, FontAwesome">
           <i class="spinner "></i>
       </form>
-      <span class="pull-right">
-          <div class="instaicon disc"></div>
-          <div class="instaicon like"></div>
-          <a href=" " class="instaicon pers"></a>
-      </span>
-      <!-- <span class="navbar-text">
-        Navbar text with an inline element
-      </span> -->
       <ul class="nav navbar-nav navbar-right ml-auto mr-5">
         {% if user.is_authenticated %}
         <li class="nav-item active">
@@ -49,19 +41,9 @@
             
           </div>
         </li>
-        
-        <!-- <li class="nav-item active">
-          <a class="nav-link" href="{%url 'home'%}">
-            <span style="font-size: 1.1em;  color:black " class="navbar-icons" ></i><img src="{% static 'photos/slide1.jpg' %}"  alt= "" class="rounded-circle user"></span>
-            </a>
-        </li> -->
-        <!-- <li>
-          <a href="/accounts/password/change">Change Password</a>
-        </li> -->
-        <!-- <li class="nav-item active"><a class="nav-link"  href="/logout">logout</a></li> -->
         {% else %}
-        <li class="nav-item active "><a class="nav-link" href="{%url 'login'%}">Log in</a></li>
-        <li class="nav-item active "><a class="nav-link" href="{%url 'register'%}">Sign up</a></li>
+        <li class="nav-item active "><a class="nav-link mt-1 mb-1" href="{%url 'login'%}">Log in</a></li>
+        <li class="nav-item active "><a class="nav-link mt-1 mb-1" href="{%url 'register'%}">Sign up</a></li>
         {%endif%}
     </ul>
     </div>

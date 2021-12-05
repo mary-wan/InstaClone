@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'tinymce',
     'cloudinary',
+    'emoji_picker',
+
     
 ]
 
