@@ -34,7 +34,7 @@ def index(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            # post.user = request.user.profile
+            post.user = current_user
             post.save()
             return HttpResponseRedirect(request.path_info)
     else:

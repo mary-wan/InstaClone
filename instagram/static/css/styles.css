@@ -71,7 +71,7 @@ body{
     /* color: blue !important; */
     background-color: rgb(250, 245, 245) !important;
 }
-.post-footer{
+.post-footer,.card-header{
     background-color: white !important;
 }
 #comment{

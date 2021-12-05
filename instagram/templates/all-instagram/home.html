@@ -22,7 +22,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="" method="post" enctype="multipart/form-data" novalidate>
+                            <form action="" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 {{ form|crispy }}
                                 <button class="btn btn-sm btn-success">Upload</button>
@@ -41,7 +41,7 @@
         <div class="col-md-6">
         {%for post in posts%}
         <div class="card mb-4">
-            <div class="card-header">Featured </div>  
+            <div class="card-header font-weight-bold">{{post.user.username}} </div>  
             <img class="card-img-top" src="{{post.image.url}}" alt=" " height="300">
             <div class="card-body">
             <!-- <h5 class="card-title">Card title</h5> -->
@@ -59,7 +59,7 @@
             <!-- <span style="font-size: 1.6em;  color:black " class="navbar-icons" ><i class="far fa-heart navbar-icons"></i></span> -->
             <p class="ml-2 mt-1"><span class="font-weight-bold">{{post.user}}</span> {{post.caption}}</p>
             <p class="ml-2 text-muted mt-2">View all comments</p>
-            <p class="ml-2 text-muted mt-1">{{post.upload_date|timesince}}</p>
+            <small class="ml-2 text-muted mt-1">{{post.upload_date|timesince}} ago</small>
             </div>
             <div class="post-footer  text-muted">
                 <form class="mb-0 ml-auto mr-auto" id="commentForm" action=" " enctype="multipart/form-data">

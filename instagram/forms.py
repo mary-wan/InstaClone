@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Image
+from django.core.exceptions import ValidationError
 # from emoji_picker.widgets import EmojiPickerTextInputAdmin, EmojiPickerTextareaAdmin
 
 
@@ -27,7 +28,9 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ('image', 'caption')
-       
+        
+        
+
 # class CommentForm(forms.ModelForm):
 #     comment = forms.CharField(label='Leave a comment',max_length=30)
 
