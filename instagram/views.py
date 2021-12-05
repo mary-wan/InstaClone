@@ -7,8 +7,7 @@ from .forms import NewsLetterForm, UserRegisterForm,PostForm,CommentForm
 # from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-
+from django.urls import reverse
 
 
 def register(request):
@@ -28,15 +27,10 @@ def register(request):
 @login_required(login_url='/accounts/login/')
 def index(request):
     posts= Image.objects.all()
-    
-    users = User.objects.exclude(id=request.user.id)
+    comments = Comments.objects.all()
+    users =request.user
     current_user = request.user
-    
-    # if 'comment' in request.GET and request.GET["comment"]:
-    #     comment=request.GET.get("comment")
-    #     comment.save()
-        
-        
+   
     if request.method == 'POST':
         post_form = PostForm(request.POST, request.FILES)
         if post_form.is_valid():
@@ -47,13 +41,14 @@ def index(request):
     else:
         post_form = PostForm()
   
-    return render(request, 'all-instagram/home.html',{'posts': posts,'post_form': post_form,'users': users} )
+    return render(request, 'all-instagram/home.html',{'posts': posts,'post_form': post_form,'users': users,'comments':comments} )
 
 
 
 @login_required(login_url='/accounts/login/')
 def comment(request,image_id):
     #Getting comment form data
+    image = get_object_or_404(Image, pk=id)
     current_user =request.user
     comments =Comments.get_comments_by_images(image_id).all()
     # comments = Comments.objects.filter(image__id=image_id)
@@ -62,10 +57,17 @@ def comment(request,image_id):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.user = request.user
+            comment.user = current_user
             comment.image = image
             comment.save()
-        return redirect('home')
+        # return redirect('home')
+    return render(request,'all-instagram/post.html',{'image':image,'comments':comments,'form':form})
+
+def like(request, id):
+    post = Image.objects.get(id = id)
+    post.likes += 1
+    post.save()
+    return HttpResponseRedirect(reverse("home"))
     
 
 

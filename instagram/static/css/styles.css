@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Aladin&family=Lato&display=swap');
 
 body{
-    background-color: rgb(252, 254, 250) !important;
+    /* background-color: rgb(252, 254, 250) !important; */
+    background-color: #fafafa;
     font-family: 'Lato', sans-serif;
 }
 .card-title {
@@ -84,7 +85,11 @@ body{
 /* .comment-button{
     margin-left: 30%;
 } */
-
+.upload-photo{
+    background-color: #fafafa;
+    border: solid 2px #333;
+    padding: 1em;
+}
 
 
 

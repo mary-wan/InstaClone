@@ -8,9 +8,6 @@
 <div class="container mt-5">
     <div class="col-md-7">
         <div class="row">
-            <button class="btn btn-sm btn-outline-info ml-4 mb-3" data-toggle="modal" data-target="#post-upload">
-                Upload Image
-            </button>
             <div class="modal fade" id="post-upload" tabindex="-1" role="dialog"
                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -39,24 +36,28 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-6">
+            <button class="btn btn-sm btn-block mb-4 mx-auto upload-photo" type="button"  data-toggle="modal" data-target="#post-upload" >
+                <i class="fas fa-upload"></i> Post a Photo
+            </button>
         {%for post in posts%}
         <div class="card mb-4">
-            <div class="card-header font-weight-bold">{{post.user.username}} </div>  
+            <a class="card-header font-weight-bold text-dark" href="#">  <img src="{% static 'photos/slide1.jpg' %}"  alt= "" class="rounded-circle user">{{post.user.username}} </a>  
             <img class="card-img-top" src="{{post.image.url}}" alt=" " height="300">
             <div class="card-body">
-            <!-- <h5 class="card-title">Card title</h5> -->
             <span>
-                <a class="ml-3" href=""><span
+                <a class="ml-3" href="{%url 'like' post.id%}"><span
                         style="font-size: 1.3em;"><i class="far fa-heart text-dark"></i></span>
                 </a>
             </span>
             <span>
-                <a class="ml-3" href=""><span
+                <a class="ml-3" href="{% url 'comment' post.id%}"><span
                         style="font-size: 1.3em;"><i class="far fa-comment text-dark"></i></span>
                 </a>
             </span>
+            <p class="card-text ml-2" style="font-weight: bolder;">{{post.likes}} likes</p>
             <p class="ml-2 mt-1"><span class="font-weight-bold">{{post.user}}</span> {{post.caption}}</p>
             <p class="ml-2 text-muted mt-2">View all {{ comment|length }} comments</p>
+
             <small class="ml-2 text-muted mt-1">{{post.upload_date|timesince}} ago </small>
             </div>
             <div class="post-footer  text-muted">
@@ -71,10 +72,12 @@
         </div>
         {%endfor%}
         </div>
-        <div class="col-md-5">
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
             {%for comment in comments%}
-            <p>{{comment.comments}}</p>
-            {%endfor%}
+                <p class="card-text text-muted">{{comment.id}}</p>
+                <p class="card-text mb-3"><span style="font-weight: bolder;">{{comment.user.username}} </span>{{comment.comment}}</p>
+        {%endfor%}
         </div>
     </div>
 </div>

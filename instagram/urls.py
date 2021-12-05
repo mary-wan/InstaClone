@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     path('',views.index, name='home'),
     url(r'^comment/(?P<image_id>\d+)', views.comment, name='comment'),
+    url(r"^like/(\d+)", views.like, name="like")
 ]
