@@ -48,7 +48,7 @@ def index(request):
 @login_required(login_url='/accounts/login/')
 def comment(request,image_id):
     #Getting comment form data
-    image = get_object_or_404(Image, pk=id)
+    image = get_object_or_404(Image, pk=image_id)
     current_user =request.user
     comments =Comments.get_comments_by_images(image_id).all()
     # comments = Comments.objects.filter(image__id=image_id)
@@ -68,8 +68,31 @@ def like(request, id):
     post.likes += 1
     post.save()
     return HttpResponseRedirect(reverse("home"))
+
+
     
 
+def post(request,image_id):
+    post = Image.objects.get(id = image_id)
+    comments = Comments.objects.filter(image__id=image_id)
+    current_user = request.user
+    # current_profile = Profile.objects.get(post=id)
 
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
 
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = current_user
+            comment.post = post
+            comment.save()
+            comment_form = CommentForm()
+            return redirect("post", post.image_id)
 
+    else:
+        comment_form = CommentForm()
+
+    return render(request, "all-instagram/post.html")
+
+def profile(request):
+    return render(request,"all-instagram/profile.html")

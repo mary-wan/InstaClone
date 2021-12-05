@@ -6,10 +6,9 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
-    bio = models.CharField(max_length=200)
-    profile_pic = models.ImageField(upload_to='images/',default='default.png')
-    pub_date_created = models.DateTimeField(auto_now_add=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile', null=True)
+    bio = models.CharField(max_length=200, default="Bio")
+    profile_pic = models.ImageField(upload_to='images/',default='v1638711191/images/default_qu1pfb.png')
 
     def save_profile(self):
         self.save()
@@ -33,7 +32,7 @@ class Profile(models.Model):
             Profile.objects.create(user=instance) 
             
     def __str__(self):
-        return f'{self.user.username}  Profile'    
+        return self.bio 
 
 class Image(models.Model):
     image = models.ImageField(upload_to='images/')
@@ -41,8 +40,7 @@ class Image(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
     upload_date = models.DateTimeField(auto_now_add=True) 
     likes = models.IntegerField(default=0)
-    # profile = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     
     
     class Meta:
@@ -76,3 +74,10 @@ class Comments(models.Model):
     
     def __str__(self):
         return self.comment
+
+class Follow(models.Model):
+    follower = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following')
+    followed = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='followers')
+
+    def __str__(self):
+        return f'{self.follower} Follow'

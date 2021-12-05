@@ -42,33 +42,38 @@
         {%for post in posts%}
         <div class="card mb-4">
             <a class="card-header font-weight-bold text-dark" href="#">  <img src="{% static 'photos/slide1.jpg' %}"  alt= "" class="rounded-circle user">{{post.user.username}} </a>  
-            <img class="card-img-top" src="{{post.image.url}}" alt=" " height="300">
+            <img class="card-img-top" src="{{post.image.url}}" alt=" " height="350">
             <div class="card-body">
             <span>
-                <a class="ml-3" href="{%url 'like' post.id%}"><span
+                <a class="ml-1" href="{%url 'like' post.id%}"><span
                         style="font-size: 1.3em;"><i class="far fa-heart text-dark"></i></span>
                 </a>
             </span>
             <span>
-                <a class="ml-3" href="{% url 'comment' post.id%}"><span
+                <a class="ml-3" href="{% url 'post' post.id%}"><span
                         style="font-size: 1.3em;"><i class="far fa-comment text-dark"></i></span>
                 </a>
-            </span>
-            <p class="card-text ml-2" style="font-weight: bolder;">{{post.likes}} likes</p>
-            <p class="ml-2 mt-1"><span class="font-weight-bold">{{post.user}}</span> {{post.caption}}</p>
-            <p class="ml-2 text-muted mt-2">View all {{ comment|length }} comments</p>
-
-            <small class="ml-2 text-muted mt-1">{{post.upload_date|timesince}} ago </small>
+            </span><br><br>
+            <span class="ml-1 view" style="font-weight: bolder;" >{{post.likes}} likes</span><br><br>
+            <span class="ml-1"><span class="font-weight-bold">{{post.user}}</span> {{post.caption}}</span><br>
+            <p class="ml-1 text-muted view">View all {{ comment|length }} comments</p>
+            <div class="ml-1">
+                {%for comment in comments%} {%if comment.id == post.id%}
+                <p class="card-text "><span style="font-weight: bolder;">{{comment.user.username}} </span>{{comment.comment}}</p>
+                {%endif%} {%endfor%}
             </div>
-            <div class="post-footer  text-muted">
+
+            <small class="ml-1 text-muted mt-1">{{post.upload_date|timesince|upper}} AGO </small>
+            </div>
+            <!-- <div class="post-footer  text-muted">
                 <form class="mb-0 ml-auto mr-auto" id="commentForm" action="{% url 'comment' post.id%} " method="post">
                     <input name="comment" autocomplete="off" id="comment" class="input-lg" 
                      placeholder="&#xF002; Add a comment ..."  style="font-family:Arial, FontAwesome" required>
                      {% csrf_token %}
-                     <!-- {{ form|crispy }} -->
+                     
                      <button class="btn btn-sm btn-info comment-button" type="submit">Post</button>
                </form>
-            </div>
+            </div> -->
         </div>
         {%endfor%}
         </div>

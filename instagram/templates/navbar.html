@@ -32,10 +32,10 @@
             </a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="{% static 'photos/slide1.jpg' %}"  alt= "" class="rounded-circle user">
+          <a class="nav-link" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="{{user.profile.profile_pic.url}}"  alt= "" class="rounded-circle user">
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a href="{%url 'home'%}" class="nav-link text-dark dropdown-item"><i class="fas fa-user"></i> Profile</a>
+            <a href="{%url 'profile'%}" class="nav-link text-dark dropdown-item"><i class="fas fa-user"></i> Profile</a>
             <a href="/accounts/password/change" class="nav-link text-dark dropdown-item"><i class="fas fa-cog"></i> Settings</a>
             <a href="/logout" class="nav-link text-dark dropdown-item">Logout</a>
             

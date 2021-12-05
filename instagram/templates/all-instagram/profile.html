@@ -1,0 +1,14 @@
+{%extends 'all-instagram/base.html'%}
+{% load bootstrap5 %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %} 
+{{ block.super}}
+
+    <div class="container">
+        <h1>{{user.username}}</h1>
+        <p>{{user.email}}</p>
+        <img src="{{user.profile.profile_pic.url}}"  alt= "" class="rounded-circle user">
+    </div>
+
+{%endblock%}

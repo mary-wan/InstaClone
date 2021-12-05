@@ -4,6 +4,7 @@ body{
     /* background-color: rgb(252, 254, 250) !important; */
     background-color: #fafafa;
     font-family: 'Lato', sans-serif;
+    font-size: 15px;
 }
 .card-title {
     justify-content: center;
@@ -90,7 +91,9 @@ body{
     border: solid 2px #333;
     padding: 1em;
 }
-
+.view{
+    font-size: 13px !important;
+}
 
 
 
