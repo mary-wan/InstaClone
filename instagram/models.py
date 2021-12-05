@@ -39,6 +39,7 @@ class Image(models.Model):
     name = models.CharField(max_length=250, blank=True)
     caption = models.CharField('Caption(optional)', max_length=300, blank=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='images')
+    profile = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True)
     upload_date = models.DateTimeField(auto_now_add=True) 
     likes = models.IntegerField(default=0)
 
@@ -58,7 +59,7 @@ class Image(models.Model):
 
 class Comments(models.Model):
     comment = models.TextField(max_length = 300)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='comments')
+    image = models.ForeignKey(Image,null=True, on_delete=models.CASCADE,related_name='comment')
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
     comment_date = models.DateTimeField(auto_now_add=True) 
     
@@ -69,9 +70,15 @@ class Comments(models.Model):
     
     def get_absolute_url(self):
         return f"/post/{self.id}"
+    
+    
+    @classmethod
+    def get_comments_by_images(cls, id):
+        comments = cls.objects.filter(id = id).first()
+        return comments
 
     def __str__(self):
-        return f'{self.user.username} Image'
+        return self.comment
 
 class Follow(models.Model):
     follower = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following')

@@ -40,10 +40,10 @@
             <div class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-md ">
                     <div class="modal-content">
-                        <form action="" method="post" novalidate enctype="multipart/form-data" class="mr-4 mt-4 ml-4 mb-4">
+                        <form action="" method="post" enctype="multipart/form-data" class="mr-4 mt-4 ml-4 mb-4">
                             {% csrf_token%}
                             {{ user_form|crispy}}
-                            {{ prof_form|crispy}}
+                            {{ profile_form|crispy}}
                             <button type="submit" class="btn btn-info btn-sm login"> Update Profile</button>
                         </form>
                     </div>

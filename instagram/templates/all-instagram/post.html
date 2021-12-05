@@ -11,7 +11,7 @@
             <!-- <a class="card-header font-weight-bold text-dark" href="#">  <img src="{% static 'photos/slide1.jpg' %}"  alt= "" class="rounded-circle user">{{post.user.username}} </a>  
             <img class="card-img-top" src="{{image.image.url}}" alt=" " height="450">  -->
             <div class="card mb-4">
-                <a class="card-header font-weight-bold text-dark" href="#">  <img src="{{post.user.profile.profile_pic.url}}" class="rounded-circle border ml-3 mt-2  mr-3"
+                <a class="card-header font-weight-bold text-dark" href="#">  <img src="{{post.user.profile.profile_pic.url}}" class="rounded-circle border ml-3 mr-3"
                     alt="" width="35" height="35">{{post.user.username}} </a>  
                 
                 <img class="card-img-top mt-1" src="{{post.image.url}}" alt=" " height="350">
@@ -28,7 +28,6 @@
                 </span><br><br>
                 <span class="ml-1 view" style="font-weight: bolder;" >{{post.likes}} likes</span><br><br>
                 <span class="ml-1"><span class="font-weight-bold">{{post.user}}</span> {{post.caption}}</span><br>
-                <p class="ml-1 text-muted view">View all {{ comment|length }} comments</p>
     
                 <small class="ml-1 text-muted mt-1">{{post.upload_date|timesince|upper}} AGO </small>
                 </div>
@@ -40,18 +39,21 @@
         <div class="col-md-3">
             <div class="">
             <hr>
+            {{post.comments}}
             {% for comment in post.comments.all %}
                 <div class="comment">
                     <div class="ml-2">
-                        <strong>{{ comment.user.username }}</strong> <span class="view">{{ comment.comment }}</span><br>
+                        <strong>{{ comment.image.id }}</strong> <span class="view">{{ comment.comment }}</span><br>
                         <small class="text-muted">{{comment.comment_date|timesince}}</small>
+                        
                     </div>
                 </div>
                 {% empty %}
                 <p class="ml-3">No comments here yet</p>
                 {% endfor %}
+                
             </div>
-            <form class="" action="" method="post" id="commform" enctype="multipart/form-data">
+            <form class="" action="{%url 'comment' post.id%}" method="post" id="commform" enctype="multipart/form-data">
                 {%csrf_token%}
                  {{form|crispy}}
                 <button class="btn btn-info btn-sm">Post</button>

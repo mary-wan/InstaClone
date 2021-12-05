@@ -42,7 +42,7 @@
         {%for post in posts%}
         <div class="card mb-4">
             <a class="card-header font-weight-bold text-dark" href="#">  <img src="{{post.user.profile.profile_pic.url}}"  alt= "" class="rounded-circle user">  {{post.user.username}} </a>  
-            <img class="card-img-top" src="{{post.image.url}}" alt=" " height="350">
+            <a href="{% url 'comment' post.id %}"><img class="card-img-top" src="{{post.image.url}}" alt=" " height="350"></a>
             <div class="card-body">
             <span>
                 <a class="ml-1" href="{%url 'like' post.id%}"><span
@@ -58,9 +58,12 @@
             <span class="ml-1"><span class="font-weight-bold">{{post.user}}</span> {{post.caption}}</span><br>
             <p class="ml-1 text-muted view">View all {{ comment|length }} comments</p>
             <div class="ml-1">
-                {%for comment in comments%} {%if comment.id == post.id%}
-                <p class="card-text "><span style="font-weight: bolder;">{{comment.user.username}} </span>{{comment.comment}}</p>
-                {%endif%} {%endfor%}
+                {% for comment in comments %}
+                {% if comment.image_id == post.id%}
+                <h5><strong>{{comment.user}}</strong> {{comment.comment}}</h5>
+                <hr>
+                {% endif %}
+                {% endfor %}
             </div>
 
             <small class="ml-1 text-muted mt-1">{{post.upload_date|timesince|upper}} AGO </small>
@@ -80,7 +83,7 @@
         <div class="col-md-1"></div>
         <div class="col-md-4">
             {%for comment in comments%}
-                <p class="card-text text-muted">{{comment.id}}</p>
+                <p class="card-text text-muted">{{comment.image.id}}</p>
                 <p class="card-text mb-3"><span style="font-weight: bolder;">{{comment.user.username}} </span>{{comment.comment}}</p>
         {%endfor%}
         </div>

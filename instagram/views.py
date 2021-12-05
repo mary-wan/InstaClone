@@ -102,39 +102,38 @@ def profile(request, username):
     images = request.user.images.all()
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
-        prof_form = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
-        if user_form.is_valid() and prof_form.is_valid():
+        profile_form = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
-            prof_form.save()
+            profile_form.save()
             return HttpResponseRedirect(request.path_info)
     else:
         user_form = UpdateUserForm(instance=request.user)
-        prof_form = UpdateUserProfileForm(instance=request.user.profile)
-    params = {
-        'user_form': user_form,
-        'prof_form': prof_form,
-        'images': images,
+        profile_form = UpdateUserProfileForm(instance=request.user.profile)
 
-    }
-    return render(request, 'all-instagram/profile.html', params)
+    return render(request, 'all-instagram/profile.html', {'user_form':user_form,'profile_form':profile_form,'images':images})
 
 
 @login_required(login_url='login')
 def comment(request, id):
-    image = get_object_or_404(Image, pk=id)
+    image = get_object_or_404(Image, pk = id)
+    # comments = Comments.get_comments_by_images(id)
  
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-            savecomment = form.save(commit=False)
-            savecomment.post = image
-            savecomment.user = request.user
-            savecomment.save()
-            return HttpResponseRedirect(request.path_info)
+            image = get_object_or_404(Image, pk = id)
+            new_comment = form.save(commit=False)
+            new_comment.post = image
+            new_comment.user = request.user.profile
+            new_comment.save()
+            
     else:
         form = CommentForm()
 
     return render(request, 'all-instagram/post.html', {'post': image,'form': form,})
+
+
 
 
 def unfollow(request, to_unfollow):
