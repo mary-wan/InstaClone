@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Post, Comment
+from .models import Image
 # from emoji_picker.widgets import EmojiPickerTextInputAdmin, EmojiPickerTextareaAdmin
 
 
@@ -23,10 +23,14 @@ class UserRegisterForm(UserCreationForm):
 
 User._meta.get_field('email')._unique = True 
 
-
-class CommentForm(forms.ModelForm):
-    comment = forms.CharField(label='Leave a comment',max_length=30)
-
+class PostForm(forms.ModelForm):
     class Meta:
-        model = Comment
-        fields = ('comment',)
+        model = Image
+        fields = ('image', 'caption')
+       
+# class CommentForm(forms.ModelForm):
+#     comment = forms.CharField(label='Leave a comment',max_length=30)
+
+#     class Meta:
+#         model = Comment
+#         fields = ('comment',)

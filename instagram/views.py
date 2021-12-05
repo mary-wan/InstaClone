@@ -1,8 +1,9 @@
 from django.http  import HttpResponse,Http404,HttpResponseRedirect
 import datetime as dt
-from django.shortcuts import render,redirect
-from .models import Post
-from .forms import NewsLetterForm, UserRegisterForm
+from django.shortcuts import render,redirect,get_object_or_404
+from .models import Image,Profile
+from django.contrib.auth.models import User
+from .forms import NewsLetterForm, UserRegisterForm,PostForm
 # from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -25,10 +26,22 @@ def register(request):
 
 
 def index(request):
-    posts= Post.objects.all()
-    if 'comment' in request.GET and request.GET["comment"]:
-        search_category=request.GET.get("category")
+    posts= Image.objects.all()
     
-    return render(request, 'all-instagram/home.html',{'posts': posts} )
+    users = User.objects.exclude(id=request.user.id)
+    current_user = request.user
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            # post.user = request.user.profile
+            post.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = PostForm()
+  
+    return render(request, 'all-instagram/home.html',{'posts': posts,'form': form,'users': users} )
+
+
 
 
