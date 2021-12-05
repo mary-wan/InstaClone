@@ -1,5 +1,3 @@
-from typing_extensions import Required
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
@@ -36,28 +34,51 @@ class Profile(models.Model):
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
-            Profile.objects.create(user=instance)
-            
+            Profile.objects.create(user=instance)           
 
 class Image(models.Model):
     image = models.ImageField(upload_to='images/')
-    caption = models.CharField('Caption(optional)', max_length=3000, blank=True)
+    caption = models.CharField('Caption(optional)', max_length=300, blank=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
     upload_date = models.DateTimeField(auto_now_add=True) 
-    profile = models.ForeignKey(Profile,on_delete=models.CASCADE, blank=True, null=True)
+    
     
     
     class Meta:
         ordering = ['-upload_date']
     
-    def __unicode__(self):
-        try:
-            public_id = self.image.public_id
+    # def __unicode__(self):
+    #     try:
+    #         public_id = self.image.public_id
             
-        except AttributeError:
-            public_id = ""
-        return "Photo <%s:%s>" % (self.caption,public_id)
+    #     except AttributeError:
+    #         public_id = ""
+    #     return "Photo <%s:%s>" % (self.caption,public_id)
     
     def __str__(self):
         return self.caption
+    
 
+class Comments(models.Model):
+    comment = models.CharField(max_length = 300)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='comments',null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    comment_date = models.DateTimeField(auto_now_add=True) 
+    
+    
+    class Meta:
+        ordering = ["-comment_date"]
+
+    def save_comment(self):
+        self.save()
+
+    def delete_comment(self):
+        self.delete()
+
+    @classmethod
+    def get_comments_by_images(cls, id):
+        comments = Comments.objects.filter(image__pk = id)
+        return comments 
+    
+    def __str__(self):
+        return self.comment

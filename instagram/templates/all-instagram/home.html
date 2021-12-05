@@ -8,15 +8,15 @@
 <div class="container mt-5">
     <div class="col-md-7">
         <div class="row">
-            <button class="btn btn-sm btn-outline-primary ml-4 mb-3" data-toggle="modal" data-target="#imageUpload">
+            <button class="btn btn-sm btn-outline-info ml-4 mb-3" data-toggle="modal" data-target="#post-upload">
                 Upload Image
             </button>
-            <div class="modal fade" id="imageUpload" tabindex="-1" role="dialog"
+            <div class="modal fade" id="post-upload" tabindex="-1" role="dialog"
                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Image Upload</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Create new post</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -24,8 +24,8 @@
                         <div class="modal-body">
                             <form action="" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
-                                {{ form|crispy }}
-                                <button class="btn btn-sm btn-success">Upload</button>
+                                {{ post_form|crispy }}
+                                <button class="btn btn-sm btn-info">Upload</button>
                                 <button type="button" class="btn btn-sm btn-outline-danger" data-dismiss="modal">
                                     Close
                                 </button>
@@ -55,23 +55,27 @@
                         style="font-size: 1.3em;"><i class="far fa-comment text-dark"></i></span>
                 </a>
             </span>
-
-            <!-- <span style="font-size: 1.6em;  color:black " class="navbar-icons" ><i class="far fa-heart navbar-icons"></i></span> -->
             <p class="ml-2 mt-1"><span class="font-weight-bold">{{post.user}}</span> {{post.caption}}</p>
-            <p class="ml-2 text-muted mt-2">View all comments</p>
-            <small class="ml-2 text-muted mt-1">{{post.upload_date|timesince}} ago</small>
+            <p class="ml-2 text-muted mt-2">View all {{ comment|length }} comments</p>
+            <small class="ml-2 text-muted mt-1">{{post.upload_date|timesince}} ago </small>
             </div>
             <div class="post-footer  text-muted">
-                <form class="mb-0 ml-auto mr-auto" id="commentForm" action=" " enctype="multipart/form-data">
+                <form class="mb-0 ml-auto mr-auto" id="commentForm" action="{% url 'comment' post.id%} " method="post">
                     <input name="comment" autocomplete="off" id="comment" class="input-lg" 
-                     placeholder="&#xF002; Add a comment ..."  style="font-family:Arial, FontAwesome">
+                     placeholder="&#xF002; Add a comment ..."  style="font-family:Arial, FontAwesome" required>
+                     {% csrf_token %}
+                     <!-- {{ form|crispy }} -->
                      <button class="btn btn-sm btn-info comment-button" type="submit">Post</button>
                </form>
             </div>
         </div>
         {%endfor%}
         </div>
-        <div class="col-md-5"></div>
+        <div class="col-md-5">
+            {%for comment in comments%}
+            <p>{{comment.comments}}</p>
+            {%endfor%}
+        </div>
     </div>
 </div>
 {%endblock%}
