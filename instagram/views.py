@@ -1,9 +1,9 @@
 from django.http  import HttpResponse,Http404,HttpResponseRedirect
 import datetime as dt
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Image,Profile,Comments
+from .models import Follow, Image,Profile,Comments
 from django.contrib.auth.models import User
-from .forms import NewsLetterForm, UserRegisterForm,PostForm,CommentForm
+from .forms import NewsLetterForm, UpdateUserForm, UpdateUserProfileForm, UserRegisterForm,PostForm,CommentForm
 # from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -28,16 +28,16 @@ def register(request):
 def index(request):
     posts= Image.objects.all()
     comments = Comments.objects.all()
-    users =request.user
+    users = User.objects.exclude(id=request.user.id)
     current_user = request.user
    
     if request.method == 'POST':
         post_form = PostForm(request.POST, request.FILES)
         if post_form.is_valid():
             post = post_form.save(commit=False)
-            post.user = current_user
+            post.user = request.user
             post.save()
-            return HttpResponseRedirect(request.path_info)
+            return HttpResponseRedirect(reverse("home"))
     else:
         post_form = PostForm()
   
@@ -63,13 +63,8 @@ def index(request):
 
 #     return render(request,'all-instagram/post.html',{'image':image,'comments':comments,'form':form})
 
-def like(request, id):
-    post = Image.objects.get(id = id)
-    post.likes += 1
-    post.save()
-    return HttpResponseRedirect(reverse("home"))
 
-  
+
 
 # def post(request,image_id):
 #     post = Image.objects.get(id = image_id)
@@ -93,8 +88,36 @@ def like(request, id):
 
 #     return render(request, "all-instagram/post.html")
 
-def profile(request):
-    return render(request,"all-instagram/profile.html")
+def like(request, id):
+    post = Image.objects.get(id = id)
+    post.likes += 1
+    post.save()
+    return HttpResponseRedirect(reverse("home"))
+
+# def profile(request):
+#     return render(request,"all-instagram/profile.html")
+
+@login_required(login_url='login')
+def profile(request, username):
+    images = request.user.images.all()
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        prof_form = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and prof_form.is_valid():
+            user_form.save()
+            prof_form.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        prof_form = UpdateUserProfileForm(instance=request.user.profile)
+    params = {
+        'user_form': user_form,
+        'prof_form': prof_form,
+        'images': images,
+
+    }
+    return render(request, 'all-instagram/profile.html', params)
+
 
 @login_required(login_url='login')
 def comment(request, id):
@@ -113,3 +136,18 @@ def comment(request, id):
 
     return render(request, 'all-instagram/post.html', {'post': image,'form': form,})
 
+
+def unfollow(request, to_unfollow):
+    if request.method == 'GET':
+        user_profile2 = Profile.objects.get(pk=to_unfollow)
+        unfollow_d = Follow.objects.filter(follower=request.user.profile, followed=user_profile2)
+        unfollow_d.delete()
+        return redirect('user_profile', user_profile2.user.username)
+
+
+def follow(request, to_follow):
+    if request.method == 'GET':
+        user_profile3 = Profile.objects.get(pk=to_follow)
+        follow_s = Follow(follower=request.user.profile, followed=user_profile3)
+        follow_s.save()
+        return redirect('user_profile', user_profile3.user.username)
