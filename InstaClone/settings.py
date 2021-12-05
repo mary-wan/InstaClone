@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'instagram.apps.InstagramConfig',
-    'bootstrap5',
+    'bootstrap4',
     'crispy_forms',
     'tinymce',
     'cloudinary',
@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'InstaClone.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'instaclone',
+        'NAME': 'intalite',
         'USER':'moringa',
         'PASSWORD': 'pass',
     }
