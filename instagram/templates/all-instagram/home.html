@@ -41,7 +41,7 @@
             </button>
         {%for post in posts%}
         <div class="card mb-4">
-            <a class="card-header font-weight-bold text-dark" href="#">  <img src="{{post.user.profile.profile_pic.url}}"  alt= "" class="rounded-circle user">  {{post.user.username}} </a>  
+            <a class="card-header font-weight-bold text-dark" href="{% url 'user_profile' post.user.username  %}">  <img src="{{post.user.profile.profile_pic.url}}"  alt= "" class="rounded-circle user">  {{post.user.username}} </a>  
             <a href="{% url 'comment' post.id %}"><img class="card-img-top" src="{{post.image.url}}" alt=" " height="350"></a>
             <div class="card-body">
             <span>

@@ -17,4 +17,5 @@ urlpatterns = [
     path('follow/<to_follow>', views.follow, name='follow'),
     path('like/<id>', views.like, name='like'),
     path('post/<id>', views.comment, name='comment'),
+    path('user_profile/<username>/', views.user_profile, name='user_profile'),
 ]
