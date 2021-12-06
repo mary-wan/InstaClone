@@ -30,6 +30,8 @@ def index(request):
     comments = Comments.objects.all()
     all_users = User.objects.exclude(id=request.user.id)
     current_user = request.user
+    
+    
    
     if request.method == 'POST':
         post_form = PostForm(request.POST, request.FILES)
@@ -64,7 +66,6 @@ def profile(request, username):
 @login_required(login_url='login')
 def comment(request, id):
     image = Image.objects.get(id=id)
-    # comments = Comments.get_comments_by_images(id)
     comments = Comments.objects.all()
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -85,16 +86,16 @@ def comment(request, id):
 def unfollow(request, to_unfollow):
     if request.method == 'GET':
         unfollow_profile = Profile.objects.get(pk=to_unfollow)
-        unfollow_d = Follow.objects.filter(follower=request.user.profile, followed=unfollow_profile)
-        unfollow_d.delete()
+        new_unfollowed = Follow.objects.filter(follower=request.user.profile, followed=unfollow_profile)
+        new_unfollowed.delete()
         return redirect('user_profile', unfollow_profile.user.username)
 
 @login_required(login_url='login')
 def follow(request, to_follow):
     if request.method == 'GET':
         follow_profile = Profile.objects.get(pk=to_follow)
-        follow_s = Follow(follower=request.user.profile, followed=follow_profile)
-        follow_s.save()
+        new_following = Follow(follower=request.user.profile, followed=follow_profile)
+        new_following.save()
         return redirect('user_profile', follow_profile.user.username)
     
     
@@ -116,9 +117,24 @@ def user_profile(request, username):
     print(followers)
     return render(request, 'all-instagram/poster.html', {'user_poster': user_poster,'followers': followers, 'if_follow': if_follow,'user_posts':user_posts})
 
+
 @login_required(login_url='login')
 def like(request, id):
     post = Image.objects.get(id = id)
     post.likes += 1
     post.save()
     return HttpResponseRedirect(reverse("home"))
+
+@login_required(login_url='login')
+def search(request):
+    profiles = User.objects.all()
+
+    if 'username' in request.GET and request.GET['username']:
+        search_term = request.GET.get('username')
+        results = User.objects.filter(username__icontains=search_term)
+        print(results)
+
+        return render(request, 'all-instagram/users.html',locals())
+
+    return redirect(index)
+

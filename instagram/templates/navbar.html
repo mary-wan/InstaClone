@@ -8,9 +8,9 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <form class="mb-0 ml-auto mr-auto" id="searchform" action=" " enctype="multipart/form-data">
-           <input name="search_user" autocomplete="off" id="searching" class="form-control input-sm search" 
-            placeholder="&#xF002; Search"  style="font-family:Arial, FontAwesome">
+      <form class="mb-0 ml-auto mr-auto" id="searchform" action="{% url 'search' %}" enctype="multipart/form-data" role="search">
+           <input autocomplete="off" id="searching" class="form-control input-sm search" 
+            placeholder="&#xF002; Search"  style="font-family:Arial, FontAwesome" name="username">
           <i class="spinner "></i>
       </form>
       <ul class="nav navbar-nav navbar-right ml-auto mr-5">
