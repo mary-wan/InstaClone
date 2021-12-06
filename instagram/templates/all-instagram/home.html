@@ -5,7 +5,7 @@
 {% block content %} 
 {{ block.super}}
 
-<div class="container mt-3">
+<div class="container mt-4">
     <div class="col-md-7">
         <div class="row">
             <div class="modal fade" id="post-upload" tabindex="-1" role="dialog"
@@ -35,14 +35,14 @@
     </div>
     <div class="row">
         <div class="col-md-1"></div>
-        <div class="col-md-6">
+        <div class="col-md-7">
             <button class="btn btn-sm mb-4 ml-2  upload-photo" type="button"  data-toggle="modal" data-target="#post-upload" >
                 <i class="fas fa-upload"></i> Upload a Photo
             </button>
         {%for post in posts%}
         <div class="card mb-4">
             <a class="card-header font-weight-bold text-dark" href="{% url 'user_profile' post.user.username  %}">  <img src="{{post.user.profile.profile_pic.url}}"  alt= "" class="rounded-circle user">  {{post.user.username}} </a>  
-            <a href="{% url 'comment' post.id %}"><img class="card-img-top" src="{{post.image.url}}" alt=" " height="350"></a>
+            <a href="{% url 'comment' post.id %}"><img class="card-img-top" src="{{post.image.url}}" alt=" " height="370"></a>
             <div class="card-body">
             <span>
                 <a class="ml-1" href="{%url 'like' post.id%}"><span
@@ -56,36 +56,15 @@
             </span><br><br>
             <span class="ml-1 view" style="font-weight: bolder;" >{{post.likes}} likes</span><br><br>
             <span class="ml-1"><span class="font-weight-bold">{{post.user}}</span> {{post.caption}}</span><br>
-            <p class="ml-1 text-muted view">View all {{ comment|length }} comments</p>
-            <div class="ml-1">
-                {% for comment in comments %}
-                {% if comment.image_id == post.id%}
-                <h5><strong>{{comment.user}}</strong> {{comment.comment}}</h5>
-                <hr>
-                {% endif %}
-                {% endfor %}
+            <a  href="{% url 'comment' post.id %}" class="ml-1 text-muted view">View all {{post.comments.count}} comments</a><br><br>
+            <small class="ml-1 text-muted mt-2">{{post.upload_date|timesince|upper}} AGO </small>
             </div>
-
-            <small class="ml-1 text-muted mt-1">{{post.upload_date|timesince|upper}} AGO </small>
-            </div>
-            <!-- <div class="post-footer  text-muted">
-                <form class="mb-0 ml-auto mr-auto" id="commentForm" action=" " method="post">
-                    <input name="comment" autocomplete="off" id="comment" class="input-lg" 
-                     placeholder="&#xF002; Add a comment ..."  style="font-family:Arial, FontAwesome" required>
-                     {% csrf_token %}
-                     
-                     <button class="btn btn-sm btn-info comment-button" type="submit">Post</button>
-               </form>
-            </div> -->
         </div>
         {%endfor%}
         </div>
         <div class="col-md-1"></div>
-        <div class="col-md-4">
-            {%for comment in comments%}
-                <p class="card-text text-muted">{{comment.image.id}}</p>
-                <p class="card-text mb-3"><span style="font-weight: bolder;">{{comment.user.username}} </span>{{comment.comment}}</p>
-        {%endfor%}
+        <div class="col-md-3">
+           
         </div>
     </div>
 </div>

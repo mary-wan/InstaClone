@@ -25,10 +25,10 @@
                     <a class="ml-3" href=" "><span
                             style="font-size: 1.3em;"><i class="far fa-comment text-dark"></i></span>
                     </a>
-                </span><br><br>
-                <span class="ml-1 view" style="font-weight: bolder;" >{{post.likes}} likes</span><br><br>
+                </span><br>
+                <span class="ml-1 view" style="font-weight: bolder;" >{{post.likes}} likes</span><br>
                 <span class="ml-1"><span class="font-weight-bold">{{post.user}}</span> {{post.caption}}</span><br>
-    
+                <p class="ml-1 text-muted view">{{post.comments.count}} comments</p>
                 <small class="ml-1 text-muted mt-1">{{post.upload_date|timesince|upper}} AGO </small>
                 </div>
 
@@ -39,17 +39,13 @@
         <div class="col-md-3">
             <div class="">
             <hr>
-            {{post.comments}}
-            {% for comment in post.comments.all %}
-                <div class="comment">
-                    <div class="ml-2">
-                        <strong>{{ comment.image.id }}</strong> <span class="view">{{ comment.comment }}</span><br>
-                        <small class="text-muted">{{comment.comment_date|timesince}}</small>
-                        
-                    </div>
-                </div>
-                {% empty %}
-                <p class="ml-3">No comments here yet</p>
+
+                {% for comment in comments %}
+                {% if comment.image_id == post.id%}
+                 <strong>{{ comment.user }} </strong> <span class="view">{{ comment.comment }}</span><br>
+                        <small class="text-muted">{{comment.comment_date|timesince}}</small> 
+                <hr>
+                {% endif %}
                 {% endfor %}
                 
             </div>

@@ -69,22 +69,23 @@ def profile(request, username):
 
 @login_required(login_url='login')
 def comment(request, id):
-    image = get_object_or_404(Image, pk = id)
+    image = Image.objects.get(id=id)
     # comments = Comments.get_comments_by_images(id)
- 
+    comments = Comments.objects.all()
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-            image = get_object_or_404(Image, pk = id)
             new_comment = form.save(commit=False)
-            new_comment.post = image
+            new_comment.image = image
             new_comment.user = request.user.profile
             new_comment.save()
+            
+            return HttpResponseRedirect(request.path_info)
             
     else:
         form = CommentForm()
 
-    return render(request, 'all-instagram/post.html', {'post': image,'form': form,})
+    return render(request, 'all-instagram/post.html', {'post': image,'form': form,'comments':comments})
 
 @login_required(login_url='login')
 def unfollow(request, to_unfollow):
@@ -97,10 +98,10 @@ def unfollow(request, to_unfollow):
 @login_required(login_url='login')
 def follow(request, to_follow):
     if request.method == 'GET':
-        user_profile3 = Profile.objects.get(pk=to_follow)
-        follow_s = Follow(follower=request.user.profile, followed=user_profile3)
+        searched_user = Profile.objects.get(pk=to_follow)
+        follow_s = Follow(follower=request.user.profile, followed=searched_user)
         follow_s.save()
-        return redirect('user_profile', user_profile3.user.username)
+        return redirect('user_profile', searched_user.user.username)
     
     
 @login_required(login_url='login')

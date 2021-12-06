@@ -13,7 +13,7 @@ class Profile(models.Model):
    
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f'{self.user.username}'
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -59,7 +59,7 @@ class Image(models.Model):
 
 class Comments(models.Model):
     comment = models.TextField(max_length = 300)
-    image = models.ForeignKey(Image,null=True, on_delete=models.CASCADE,related_name='comment')
+    image = models.ForeignKey(Image,null=True, on_delete=models.CASCADE,related_name='comments')
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
     comment_date = models.DateTimeField(auto_now_add=True) 
     
@@ -78,7 +78,7 @@ class Comments(models.Model):
         return comments
 
     def __str__(self):
-        return self.comment
+        return f'{self.user.name} Image'
 
 class Follow(models.Model):
     follower = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following')
