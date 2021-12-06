@@ -14,6 +14,41 @@ from pathlib import Path
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import os
+import django_heroku
+import dj_database_url
+from decouple import config,Csv
+
+
+MODE=config("MODE", default="dev")
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+# development
+if config('MODE')=="dev":
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': config('DB_NAME'),
+           'USER': config('DB_USER'),
+           'PASSWORD': config('DB_PASSWORD'),
+           'HOST': config('DB_HOST'),
+           'PORT': '',
+       }
+       
+   }
+# production
+else:
+   DATABASES = {
+       'default': dj_database_url.config(
+           default=config('DATABASE_URL')
+       )
+   }
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
+DATABASES = { 'default': dj_database_url.config() }
+
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +58,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9-rou)%(m0umv55v=ojest8dz5l2s42a8r7c^g%g538c=@d$8@'
+# SECRET_KEY = 'django-insecure-9-rou)%(m0umv55v=ojest8dz5l2s42a8r7c^g%g538c=@d$8@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -84,14 +119,14 @@ WSGI_APPLICATION = 'InstaClone.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'intalite',
-        'USER':'moringa',
-        'PASSWORD': 'pass',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'intalite',
+#         'USER':'moringa',
+#         'PASSWORD': 'pass',
+#     }
+# }
 
 
 # Password validation
@@ -132,6 +167,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -150,6 +189,6 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'NyVFQzHFPKnSIEYqKPbmu9FSwms',
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # CLOUDINARY_URL='cloudinary://939366662997374:NyVFQzHFPKnSIEYqKPbmu9FSwms@dzhxp777b'
