@@ -52,14 +52,14 @@ $ python3.6 manage.py test instagram
 
 ****
 
-[Go Back to the top](#PhotoBay)
+[Go Back to the top](#InstaClone)
 ## Technology Used
 * Python
 * Html
 * css
 
 ****
-[Go Back to the top](#PhotoBay)
+[Go Back to the top](#InstaClone)
 ## Licence
 MIT License
 
@@ -85,9 +85,9 @@ SOFTWARE.
 
 
 ****
-[Go Back to the top](#PhotoBay)
+[Go Back to the top](#InstaClone)
 ## Authors Info
 * Slack Profile - [Mary Njenga](https://app.slack.com/client/T077KKCG6/GLRQR61NW/user_profile/U027VKL1WLT?cdn_fallback=1)
 * Email - [Mary Njenga](mary.njenga@student.moringaschool.com)
 
-[Go Back to the top](#PhotoBay)
+[Go Back to the top](#InstaClone)
