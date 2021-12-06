@@ -43,12 +43,6 @@ def index(request):
   
     return render(request, 'all-instagram/home.html',{'posts': posts,'post_form': post_form,'all_users': all_users,'comments':comments,'current_user':current_user} )
 
-@login_required(login_url='login')
-def like(request, id):
-    post = Image.objects.get(id = id)
-    post.likes += 1
-    post.save()
-    return HttpResponseRedirect(reverse("home"))
 
 @login_required(login_url='login')
 def profile(request, username):
@@ -90,18 +84,18 @@ def comment(request, id):
 @login_required(login_url='login')
 def unfollow(request, to_unfollow):
     if request.method == 'GET':
-        user_profile2 = Profile.objects.get(pk=to_unfollow)
-        unfollow_d = Follow.objects.filter(follower=request.user.profile, followed=user_profile2)
+        unfollow_profile = Profile.objects.get(pk=to_unfollow)
+        unfollow_d = Follow.objects.filter(follower=request.user.profile, followed=unfollow_profile)
         unfollow_d.delete()
-        return redirect('user_profile', user_profile2.user.username)
+        return redirect('user_profile', unfollow_profile.user.username)
 
 @login_required(login_url='login')
 def follow(request, to_follow):
     if request.method == 'GET':
-        searched_user = Profile.objects.get(pk=to_follow)
-        follow_s = Follow(follower=request.user.profile, followed=searched_user)
+        follow_profile = Profile.objects.get(pk=to_follow)
+        follow_s = Follow(follower=request.user.profile, followed=follow_profile)
         follow_s.save()
-        return redirect('user_profile', searched_user.user.username)
+        return redirect('user_profile', follow_profile.user.username)
     
     
 @login_required(login_url='login')
@@ -112,12 +106,19 @@ def user_profile(request, username):
     user_posts = user_poster.images.all()
     
     followers = Follow.objects.filter(followed=user_poster.profile)
-    follow_status = None
+    if_follow = None
     for follower in followers:
         if request.user.profile == follower.follower:
-            follow_status = True
+            if_follow = True
         else:
-            follow_status = False
+            if_follow = False
 
     print(followers)
-    return render(request, 'all-instagram/poster.html', {'user_poster': user_poster,'followers': followers, 'follow_status': follow_status,'user_posts':user_posts})
+    return render(request, 'all-instagram/poster.html', {'user_poster': user_poster,'followers': followers, 'if_follow': if_follow,'user_posts':user_posts})
+
+@login_required(login_url='login')
+def like(request, id):
+    post = Image.objects.get(id = id)
+    post.likes += 1
+    post.save()
+    return HttpResponseRedirect(reverse("home"))

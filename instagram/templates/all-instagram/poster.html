@@ -11,14 +11,14 @@
                 <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-3">
-                        <img class="rounded-circle" src="{{ user.profile.profile_pic.url }}" height="150px" width="150px">
+                        <img class="rounded-circle" src="{{ user_poster.profile.profile_pic.url }}" height="150px" width="150px">
                     </div>
                     <div class="col-md-6 mt-3">
                         <div class="media-body">
                             <div class="">
                                 <span class="font-weight-bold name">{{ user_poster.username }}</span>
-                                {% if follow_status %}
-                                <a class="btn btn-sm btn-outline-danger ml-5" href="{% url 'unfollow' user_poster.profile.id %}">UNFOLLOW</a>
+                                {% if if_follow %}
+                                <a class="btn btn-sm btn-danger ml-5" href="{% url 'unfollow' user_poster.profile.id %}">UNFOLLOW</a>
 
                                 {%else%}
 

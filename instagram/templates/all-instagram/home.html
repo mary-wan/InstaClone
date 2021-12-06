@@ -36,7 +36,7 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-7">
-            <button class="btn btn-sm mb-4 ml-2  upload-photo" type="button"  data-toggle="modal" data-target="#post-upload" >
+            <button class="btn btn-sm mb-4 ml-2 btn-outline-secondary" type="button"  data-toggle="modal" data-target="#post-upload" >
                 <i class="fas fa-upload"></i> Upload a Photo
             </button>
         {%for post in posts%}
@@ -65,14 +65,14 @@
         <!-- <div class="col-md-1"></div> -->
         <div class="col-md-4 mt-5 fixed">
             <a href="{%url 'profile' user.username%}" class="font-weight-bold txt">
-                <img class="rounded-circle" src="{{user.profile.profile_pic.url}}" height="50" width="50">
+                <img class="rounded-circle user" src="{{user.profile.profile_pic.url}}" height="50" width="50">
                 <span class="font-weight-bold ml-2"> {{user.username}}</span>
             </a>
             <p class="text-muted font-weight-bold mt-4"> Suggestions For You</p>
             {% for person in all_users %}
             <div class="container mb-2">
                     <div class="">
-                        <img class="rounded-circle" src="{{ person.profile.profile_pic.url }}" height="30" width="30">
+                        <img class="rounded-circle user" src="{{ person.profile.profile_pic.url }}" height="30" width="30">
                         <span class="font-weight-bold ml-2"><a href="{% url 'user_profile' person.username  %}" class="txt">{{person.username}}</a></span>
                     </div>
             </div>

@@ -41,7 +41,7 @@ $ python3.6 manage.py unserver
 ```
 To run the tests run the command
 ```
-$ python3.6 manage.py test gallery
+$ python3.6 manage.py test instagram
 
 ```
 ## Behaviour Driven Development
