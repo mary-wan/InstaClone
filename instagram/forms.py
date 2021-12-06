@@ -33,6 +33,7 @@ class PostForm(forms.ModelForm):
 
 class CommentForm(forms.ModelForm):
     comment = forms.CharField(label='Leave a comment',max_length=30)
+    # comment = forms.CharField(widget=EmojiPickerTextareaAdmin)
 
     class Meta:
         model = Comments

@@ -58,7 +58,7 @@ def profile(request, username):
             return HttpResponseRedirect(request.path_info)
     else:
         user_form = UpdateUserForm(instance=request.user)
-        profile_form = UpdateUserProfileForm(instance=request.user.profile)
+        profile_form = UpdateUserProfileForm()
 
     return render(request, 'all-instagram/profile.html', {'user_form':user_form,'profile_form':profile_form,'images':images})
 
