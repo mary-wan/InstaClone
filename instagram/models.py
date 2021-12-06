@@ -47,15 +47,19 @@ class Image(models.Model):
     
     class Meta:
         ordering = ['-upload_date']
-        
-    def get_user_images(cls, username):
-        images = Image.objects.filter(image__user = username)
-        return images
 
     
     def __str__(self):
         return f'{self.user.username} Image'
-    
+
+ 
+class Follow(models.Model):
+    follower = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following')
+    followed = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='followers')
+
+    def __str__(self):
+        return f'{self.follower} Follow'
+        
 
 class Comments(models.Model):
     comment = models.TextField(max_length = 300)
@@ -67,22 +71,7 @@ class Comments(models.Model):
     class Meta:
         ordering = ["-comment_date"]
 
-    
-    def get_absolute_url(self):
-        return f"/post/{self.id}"
-    
-    
-    @classmethod
-    def get_comments_by_images(cls, id):
-        comments = cls.objects.filter(id = id).first()
-        return comments
 
     def __str__(self):
         return f'{self.user.name} Image'
 
-class Follow(models.Model):
-    follower = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following')
-    followed = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='followers')
-
-    def __str__(self):
-        return f'{self.follower} Follow'
