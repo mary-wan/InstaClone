@@ -28,7 +28,7 @@ def register(request):
 def index(request):
     posts= Image.objects.all()
     comments = Comments.objects.all()
-    users = User.objects.exclude(id=request.user.id)
+    all_users = User.objects.exclude(id=request.user.id)
     current_user = request.user
    
     if request.method == 'POST':
@@ -41,7 +41,7 @@ def index(request):
     else:
         post_form = PostForm()
   
-    return render(request, 'all-instagram/home.html',{'posts': posts,'post_form': post_form,'users': users,'comments':comments} )
+    return render(request, 'all-instagram/home.html',{'posts': posts,'post_form': post_form,'all_users': all_users,'comments':comments,'current_user':current_user} )
 
 @login_required(login_url='login')
 def like(request, id):
