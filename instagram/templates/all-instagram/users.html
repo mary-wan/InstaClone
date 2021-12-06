@@ -17,7 +17,7 @@
                     <img class="rounded-circle user" src="{{ person.profile.profile_pic.url }}" height="30" width="30">
                     <span class="font-weight-bold ml-2"><a href="{% url 'user_profile' person.username  %}" class="txt">{{person.username}}</a></span>
                     
-                </div>
+                </div> <br>
             {% endfor %}
         {% else %}
             <div class="col-md-12 text-center">
