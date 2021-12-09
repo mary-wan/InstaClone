@@ -81,9 +81,19 @@ INSTALLED_APPS = [
     'tinymce',
     'cloudinary',
     'emoji_picker',
+    # 'django.contrib.sites',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.facebook',
+    'social_django',
+    'django_extensions'
 
     
 ]
+# SITE_ID = 1
+
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -148,6 +158,22 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = [
+  
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    
+
+   
+    'social_core.backends.facebook.FacebookOAuth2',
+
+   
+]
+
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -191,4 +217,5 @@ CLOUDINARY_STORAGE = {
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# CLOUDINARY_URL='cloudinary://939366662997374:NyVFQzHFPKnSIEYqKPbmu9FSwms@dzhxp777b'
+SOCIAL_AUTH_FACEBOOK_KEY='307303717971701'
+SOCIAL_AUTH_FACEBOOK_SECRET ='3ea3594ead3f9b14e0efe56067b5889d'
