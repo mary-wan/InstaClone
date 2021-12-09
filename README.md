@@ -16,7 +16,7 @@ InstaClone is a clone of the website for the popular photo app Instagram build u
 ![Site Image](instagram/static/photos/site1.png)
 
 ## Live link
-`https://instacl0nelite.herokuapp.com/`
+`https://instcl0nelite.herokuapp.com/`
 ## Installation
 ### Requirements
 * python3.6
