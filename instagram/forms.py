@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.widgets import Textarea
 from .models import Image,Comments, Profile
-# from emoji_picker.widgets import EmojiPickerTextInputAdmin, EmojiPickerTextareaAdmin
+from emoji_picker.widgets import EmojiPickerTextInputAdmin, EmojiPickerTextareaAdmin
 
 
 class NewsLetterForm(forms.Form):
@@ -32,8 +32,8 @@ class PostForm(forms.ModelForm):
         
 
 class CommentForm(forms.ModelForm):
-    comment = forms.CharField(label='Leave a comment',max_length=30)
-    # comment = forms.CharField(widget=EmojiPickerTextareaAdmin)
+    # comment = forms.CharField(label='Leave a comment',max_length=30)
+    comment = forms.CharField(widget=EmojiPickerTextareaAdmin)
 
     class Meta:
         model = Comments
