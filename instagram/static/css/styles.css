@@ -122,9 +122,6 @@ body{
         position: fixed;
         right: 0% !important;
     }
-    .move{
-        position: fixed;
-        left: 0% !important;
-    }
+    
     
 }
