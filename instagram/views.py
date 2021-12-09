@@ -36,7 +36,7 @@ def index(request):
 def register(request):
     if request.user.is_authenticated:
     #redirect user to the profile page
-        return HttpResponseRedirect(index)
+        return HttpResponseRedirect('home')
     if request.method=="POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():
