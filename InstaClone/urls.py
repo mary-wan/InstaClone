@@ -23,7 +23,7 @@ urlpatterns = [
     path('',include('instagram.urls')),
     path('tinymce /', include('tinymce.urls')),
     path('accounts/register/',insta_views.register, name='register'),
-    path('accounts/login/',auth_views.LoginView.as_view(), name='login'),
+    path('accounts/login/',auth_views.LoginView.as_view(redirect_authenticated_user=True), name='login'),
     path('logout/',auth_views.LogoutView.as_view(), name='logout'),
     path('social-auth/',include('social_django.urls',namespace='social')),
 
