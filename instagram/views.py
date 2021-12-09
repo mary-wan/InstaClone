@@ -10,19 +10,6 @@ from django.contrib import messages
 from django.urls import reverse
 
 
-def register(request):
-    if request.method=="POST":
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request,f'Account created for {username}!')
-            return redirect('login')
-            
-    else:
-        form = UserRegisterForm()
-    return render(request,"registration/register.html",{'form':form})
-
 
 @login_required(login_url='/accounts/login/')
 def index(request):
@@ -44,6 +31,23 @@ def index(request):
         post_form = PostForm()
   
     return render(request, 'all-instagram/home.html',{'posts': posts,'post_form': post_form,'all_users': all_users,'comments':comments,'current_user':current_user} )
+
+
+def register(request):
+    if request.user.is_authenticated:
+    #redirect user to the profile page
+        return HttpResponseRedirect(index)
+    if request.method=="POST":
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request,f'Account created for {username}!')
+            return redirect('login')
+            
+    else:
+        form = UserRegisterForm()
+    return render(request,"registration/register.html",{'form':form})
 
 
 @login_required(login_url='login')
